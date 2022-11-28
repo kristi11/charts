@@ -8,22 +8,12 @@
 
     <title>{{ config('app.name', 'Charts') }}</title>
 
-    <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Styles -->
     @stack('styles')
-    {{--    @livewireStyles--}}
+        @livewireStyles
     <script src="https://cdn.tailwindcss.com"></script>
-
-    {{--    <style>--}}
-    {{--        .content a {--}}
-    {{--            color: blue;--}}
-    {{--        }--}}
-    {{--        .content ul {--}}
-    {{--            list-style-type: disc;--}}
-    {{--            margin-left: 10px;--}}
-    {{--        }--}}
-    {{--    </style>--}}
 </head>
 
 <body class="font-sans antialiased text-gray-900">
@@ -33,12 +23,6 @@
         <nav class="container mx-auto px-4 py-4 space-x-6">
             <a href="/" class="hover:text-gray-200">Home</a>
             <a href="/charts" class="hover:text-gray-200">Charts</a>
-            {{--            <a href="/stats" class="hover:text-gray-200">Stats</a>--}}
-            {{--            <a href="/announcement/edit" class="hover:text-gray-200">Edit Announcement</a>--}}
-            {{--            <a href="/posts" class="hover:text-gray-200">Posts</a>--}}
-            {{--            <a href="/posts/create" class="hover:text-gray-200">Create Post</a>--}}
-            {{--            <a href="/drag-drop" class="hover:text-gray-200">Drag and Drop</a>--}}
-            {{--            <a href="/http-client" class="hover:text-gray-200">HTTP Client</a>--}}
         </nav>
     </div>
 
@@ -47,6 +31,7 @@
         {{ $slot }}
     </main>
 </div>
+@livewireScripts
 @stack('scripts')
 </body>
 </html>
