@@ -1,8 +1,6 @@
-
-
 ## Charts
 
-This is a simple project showing data through. You can use this to visualize data on your admin panel or wherever you might need to.
+This is a simple project showing data through charts. You can use this to visualize data on your admin panel or wherever you might need to.
 This particular project uses [chart.js](https://www.chartjs.org/docs/latest/) and laravel [livewire](https://laravel-livewire.com/)
 
 ## Getting Started
