@@ -15,7 +15,7 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
         @livewireStyles
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <style>
         .content a {
             color: blue;

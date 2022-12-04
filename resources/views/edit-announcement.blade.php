@@ -4,10 +4,20 @@
             {{ session('success_message') }}
         </div>
     @endif
+
+    @if(count($errors) > 0)
+        <div class="bg-red-200 text-red-700 px-4 py-2">
+            <ul class="list-disc ml-4">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error  }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="bg-white rounded-md border my-8 px-6 py-6">
         <div>
             <h2 class="text-2xl font-semibold">Edit Announcement</h2>
-            <form action="/announcement/update" method="POST" class="max-w-2xl mt-4" id="updateAnnouncement">
+            <form action="/announcement/update" method="POST" class="max-w-2xl mt-4" id="updateAnnouncement" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 <div>
@@ -61,6 +71,17 @@
                     <label for="buttonColor" class="font-semibold block">Button Color</label>
                     <input type="color" name="buttonColor" id="buttonColor" value="{{ $announcement->buttonColor }}" required>
                 </div>
+
+                <div class="mt-4">
+                    <label for="imageUpload" class="font-semibold block">Upload image</label>
+                    <input type="file" name="imageUpload" class="mt-2" accept="image/*">
+                </div>
+
+                @if($announcement->imageUpload)
+                    <div class="mt-4">
+                        <img src="{{ asset('storage/'.$announcement->imageUpload) }}" alt="image" class="max-w-xs">
+                    </div>
+                @endif
 
                 <div class="mt-4">
                     <label for="buttonLink" class="font-semibold block">Button Link</label>
