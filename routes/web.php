@@ -5,6 +5,8 @@ use App\Models\Chart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 /*
@@ -61,6 +63,7 @@ Route::patch('/announcement/update', function (Request $request) {
         'buttonColor' => 'required',
         'buttonLink' => 'required|url',
         'imageUpload' => 'file|image|max:20000',
+        'imageUploadFilepond' => 'string|nullable',
     ]);
 
     if ($request->imageUpload) {
@@ -81,9 +84,25 @@ Route::patch('/announcement/update', function (Request $request) {
 //        $fields = array_merge($fields, ['imageUpload' => $path]);
     }
 
+    if ($request->imageUploadFilepond) {
+        $newFileName = Str::after($request->imageUploadFilepond, 'tmp/');
+        Storage::disk('public')->move($request->imageUploadFilepond, "images/$newFileName");
+        $fields = array_merge($fields, ['imageUploadFilepond' => "images/$newFileName"]);
+    }
+
     $announcement = Announcement::first();
 
     $announcement->update($fields);
 
     return back()->with('success_message', 'Announcement updated');
+});
+
+Route::post('/upload', function (Request $request) {
+    if ($request->imageUploadFilepond) {
+        //Filepond will save to temporary location first
+        $path = $request->file('imageUploadFilepond')->store('tmp', 'public');
+//        $announcement = Announcement::first();
+//        $announcement->update(['imageUploadFilepond' => $path]);
+    }
+    return $path;
 });

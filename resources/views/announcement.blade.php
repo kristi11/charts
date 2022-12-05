@@ -4,9 +4,12 @@
             <h3 class="text-2xl text-center font-bold px-4 py-4">{{ $announcement->titleText }}</h3>
         </div>
         <div class="text-gray-600 px-5 py-5">
-            @if($announcement->imageUpload)
-                <img src="{{ asset('storage/'.$announcement->imageUpload) }}" alt="image" class="mx-auto">
-            @endif
+{{--            @if($announcement->imageUpload)--}}
+{{--                <img src="{{ asset('storage/'.$announcement->imageUpload) }}" alt="image" class="mx-auto">--}}
+{{--            @endif--}}
+                @if($announcement->imageUploadFilepond)
+                    <img src="{{ asset('storage/'.$announcement->imageUploadFilepond) }}" alt="image" class="mx-auto">
+                @endif
             <div class="content ml-4">
                 {!! $announcement->content !!}
             </div>

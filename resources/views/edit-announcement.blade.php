@@ -1,4 +1,12 @@
 <x-app-layout>
+    @push('styles')
+        <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+        <link
+            href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+            rel="stylesheet"
+        />
+    @endpush
     @if (session('success_message'))
         <div class="bg-green-200 text-green-800 px-4 py-2">
             {{ session('success_message') }}
@@ -82,7 +90,18 @@
                         <img src="{{ asset('storage/'.$announcement->imageUpload) }}" alt="image" class="max-w-xs">
                     </div>
                 @endif
+                {{--Filepond--}}
+                <div class="mt-4">
+                    <label for="imageUploadFilepond" class="font-semibold block">Upload image Filepond</label>
+                    <input type="file" name="imageUploadFilepond" id="imageUploadFilepond" class="mt-2" accept="image/*">
+                </div>
 
+                @if($announcement->imageUploadFilepond)
+                    <div class="mt-4">
+                        <img src="{{ asset('storage/'.$announcement->imageUploadFilepond) }}" alt="image" class="max-w-xs">
+                    </div>
+                @endif
+                {{--end filepond--}}
                 <div class="mt-4">
                     <label for="buttonLink" class="font-semibold block">Button Link</label>
                     <input type="url" name="buttonLink" id="buttonLink" class="border border-gray-400 rounded w-full px-2 py-2 mt-2" value="{{ $announcement->buttonLink }}" required>
@@ -95,11 +114,39 @@
         </div>
     </div>
     @push('scripts')
+            <!-- Include the Filepond library plugins-->
+        <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+            <!-- Include the Filepond library -->
+        <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
         <!-- Include the Quill library -->
         <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
         <!-- Initialize Quill editor -->
         <script>
+            <!-- Register Filepond plugins-->
+            FilePond.registerPlugin(FilePondPluginImageResize);
+            FilePond.registerPlugin(FilePondPluginImageTransform);
+            FilePond.registerPlugin(FilePondPluginFileValidateType);
+            FilePond.registerPlugin(FilePondPluginImagePreview);
+
+            <!-- Initialize Filepond -->
+            const inputElement = document.querySelector('#imageUploadFilepond');
+            const pond = FilePond.create(inputElement,{
+                imageResizeTargetWidth: 800,
+                imageResizeMode: 'contain',
+                imageResizeUpscale: false,
+                server: {
+                    url: '/upload',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token()  }}'
+                    }
+                }
+            });
+
+            <!-- Initialize Quill editor -->
             var quill = new Quill('#editor', {
                 theme: 'snow',
                 placeholder: 'Enter announcement details',

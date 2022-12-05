@@ -12,8 +12,7 @@
 
     <!-- Styles -->
     @stack('styles')
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-        @livewireStyles
+    @livewireStyles
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
