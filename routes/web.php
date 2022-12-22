@@ -19,11 +19,15 @@ use Intervention\Image\Facades\Image;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/charts', function () {
-    return view('charts');
-});
+//Route::get('/charts', function () {
+//    return view('charts');
+//});
 
 Route::get('/', function () {
+    return view('home');
+});
+
+Route::get('/charts', function () {
     return view('charts');
 });
 

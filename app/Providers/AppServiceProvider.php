@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('components.app-layout', function ($view) {
+        view()->composer('layouts.app-layout', function ($view) {
             $announcement = Announcement::first();
 
             $view->with([
